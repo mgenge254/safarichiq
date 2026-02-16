@@ -21,15 +21,16 @@ function App() {
     <>
       <Navbar cartCount={cartItems.length} />
 
-      <Routes>
-        <Route path="/" element={<Products addToCart={addToCart} />} />
-        <Route path="/cart" element={<Cart cartItems={cartItems} />} />
-        <Route path="/men" element={<Men />} />
-        <Route path="/women" element={<Women />} />
-        <Route path="/kids" element={<Kids />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
+     <Routes>
+  <Route path="/" element={<Products addToCart={addToCart} />} />
+  <Route path="/cart" element={<Cart cartItems={cartItems} />} />
+  <Route path="/men" element={<Men addToCart={addToCart} />} />
+  <Route path="/women" element={<Women addToCart={addToCart} />} />
+  <Route path="/kids" element={<Kids addToCart={addToCart} />} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/signup" element={<Signup />} />
+</Routes>
+
     </>
   );
 }
