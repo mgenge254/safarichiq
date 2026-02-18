@@ -1,4 +1,4 @@
-require("dotenv").config(); // Load environment variables FIRST
+require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -6,43 +6,38 @@ const cors = require("cors");
 
 const app = express();
 
-// ✅ CORS Configuration (Allow React frontend)
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: [
+      "http://localhost:3000",
+      "https://safarichiq.netlify.app"
+    ],
     credentials: true,
   })
 );
 
-// ✅ Middleware
 app.use(express.json());
 
-// ✅ Import routes
 const productRoutes = require("./routes/products");
 
-// ✅ Root test route
+// Root test route
 app.get("/", (req, res) => {
   res.send("SafariChiq backend is running!");
 });
 
-// ✅ Use product routes
 app.use("/api/products", productRoutes);
 
-// ✅ Connect to MongoDB
 mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("✅ MongoDB Connected Successfully");
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
-  .catch((err) => {
-    console.error("❌ MongoDB Connection Error:", err);
-  });
+  .then(() => console.log("✅ MongoDB Connected Successfully"))
+  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
-// ✅ Start server
 const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+
 
 
